@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import NavItems from "@/components/NavItems";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,7 +15,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Signalist",
-  description: "Track real-time stock prices , get personalized alerts and explore detailed company insights",
+  description:
+    "Track real-time stock prices , get personalized alerts and explore detailed company insights",
 };
 
 export default function RootLayout({
