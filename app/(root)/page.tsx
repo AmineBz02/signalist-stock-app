@@ -3,7 +3,7 @@ import React from "react";
 
 const HomePage = () => {
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex min-h-screen home-wrapper">
       <Button className="bg-(--color-yellow-400)"> Click me </Button>
     </div>
   );
