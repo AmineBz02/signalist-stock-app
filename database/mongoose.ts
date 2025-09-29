@@ -15,6 +15,7 @@ if (!cached) {
 }
 
 export async function connectToDatabase() {
+    
   if (cached.conn) {
     return cached.conn;
   }
@@ -25,6 +26,11 @@ export async function connectToDatabase() {
     }).then((mongoose) => mongoose);
   }
 
-  cached.conn = await cached.promise;
+   try {
+        cached.conn = await cached.promise;
+    } catch (err) {
+        cached.promise = null;
+        throw err;
+    }
   return cached.conn;
 }
