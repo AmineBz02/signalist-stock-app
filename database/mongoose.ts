@@ -1,0 +1,36 @@
+// lib/mongoose.ts
+import mongoose from "mongoose";
+
+const MONGODB_URI = process.env.MONGODB_URI as string;
+
+if (!MONGODB_URI) {
+  throw new Error("Please define the MONGODB_URI environment variable inside .env.local");
+}
+
+// This is the cache object we'll reuse across hot reloads in dev
+let cached = (global as any).mongoose;
+
+if (!cached) {
+  cached = (global as any).mongoose = { conn: null, promise: null };
+}
+
+export async function connectToDatabase() {
+    
+  if (cached.conn) {
+    return cached.conn;
+  }
+
+  if (!cached.promise) {
+    cached.promise = mongoose.connect(MONGODB_URI, {
+      bufferCommands: false, // disable mongoose buffering
+    }).then((mongoose) => mongoose);
+  }
+
+   try {
+        cached.conn = await cached.promise;
+    } catch (err) {
+        cached.promise = null;
+        throw err;
+    }
+  return cached.conn;
+}
